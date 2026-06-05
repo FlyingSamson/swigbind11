@@ -51,6 +51,14 @@ configure_package_config_file(
     INSTALL_DESTINATION "${swigbind11_REL_CMAKE_DEST}"
 )
 
+write_basic_package_version_file(
+  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+  COMPATIBILITY
+    # following semantic versioning (https://semver.org/), consider two versions
+    # of this project compatible if they share the same major version number
+    SameMajorVersion
+)
+
 # --- Installation Logic ---
 
 # 1. Install Python source files (the __init__.py and other scripts)
@@ -72,5 +80,10 @@ install(EXPORT swigbind11Targets
     DESTINATION "${swigbind11_REL_CMAKE_DEST}"
 )
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-        DESTINATION "${swigbind11_REL_CMAKE_DEST}")
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+    DESTINATION
+        "${swigbind11_REL_CMAKE_DEST}"
+)

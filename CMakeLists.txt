@@ -6,6 +6,15 @@ enable_language(CXX)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
+if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
+    set(SWIGBIND11_MASTER_PROJECT ON)
+else()
+    set(SWIGBIND11_MASTER_PROJECT OFF)
+endif()
+
+option(SWIGBIND11_INSTALL "Install swigbind11 header files" ${SWIGBIND11_MASTER_PROJECT})
+
+
 # Generate swigpyrun.h while installing swigbind11
 find_package(SWIG REQUIRED)
 include(${SWIG_USE_FILE})
@@ -61,6 +70,7 @@ write_basic_package_version_file(
 
 # --- Installation Logic ---
 
+if(SWIGBIND11_INSTALL)
 # 1. Install Python source files (the __init__.py and other scripts)
 install(DIRECTORY "swigbind11/"
         DESTINATION "${swigbind11_REL_ROOT}")
@@ -87,3 +97,4 @@ install(
     DESTINATION
         "${swigbind11_REL_CMAKE_DEST}"
 )
+endif()
